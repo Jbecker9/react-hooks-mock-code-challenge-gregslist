@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ListingCard from "./ListingCard";
 
-function ListingsContainer() {
-  const [listings, setListings] = useState([])
+function ListingsContainer({ renderListings, listings }) {
 
   useEffect(()=>{
     fetch("http://localhost:6001/listings")
       .then((r)=>r.json())
-      .then((listings) => setListings(listings))
+      .then((listings) => renderListings(listings))
   }, [])
 
   function deleteListing(prop){
     const newDelListings = listings.filter((listing)=>listing.id !== prop.id)
-    setListings(newDelListings)
+    renderListings(newDelListings)
   }
-
 
   return (
     <main>

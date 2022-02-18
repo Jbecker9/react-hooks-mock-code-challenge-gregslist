@@ -1,14 +1,20 @@
 import React from "react";
 
-function ListingCard({ listing }) {
+function ListingCard({ listing, deleteListing }) {
 
   function favoriteListing(event){
-    console.log(event.target)
     if(event.target.className === "emoji-button favorite active"){
       return event.target.className = "emoji-button favorite"
     } else {
       return event.target.className = "emoji-button favorite active"
     }
+  }
+
+  function onDelClick(){
+    deleteListing(listing)
+    fetch(`http://localhost:6001/listings/${listing.id}`,{
+      method: "DELETE"
+    })
   }
 
   return (
@@ -25,7 +31,7 @@ function ListingCard({ listing }) {
         )}
         <strong>{listing.description}</strong>
         <span> · {listing.location}</span>
-        <button className="emoji-button delete">🗑</button>
+        <button onClick={onDelClick} className="emoji-button delete">🗑</button>
       </div>
     </li>
   );
